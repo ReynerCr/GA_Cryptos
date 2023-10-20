@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -23,6 +24,15 @@ public class App {
         List<List<Double>> Acum = new ArrayList<>();
 
         for (Coin crypto : cryptos) {
+         /*    System.out.println(crypto.getSymbol());
+
+            System.out.println(Arrays.toString(crypto.getRpi()));
+
+            Scanner sc = new Scanner (System.in); // Crea un objeto Scanner
+System.out.println ("Presiona Enter para continuar..."); // Muestra un mensaje
+sc.nextLine (); // Espera a que el usuario presione Enter
+*/
+
             System.out.println(crypto.getMediaRpi());
             Double[] vector2 = crypto.getvector_rpi_m();
 
@@ -31,7 +41,8 @@ public class App {
             Acum.add(conjunto);
         }
 
-        System.out.println(Acum.get(0)); // TODO borrar
+     //   System.out.println(Acum.get(3)); // TODO borrar
+
 
         Double[][] MatrizCovarianza = new Double[10][10];
 
@@ -39,7 +50,8 @@ public class App {
             for (int j = 0; j < 10; j++) {
                 Double acum = 0.0d;
                 for (int k = 0; k < 60; k++) {
-                    acum = acum + (Acum.get(i).get(j) * Acum.get(i).get(j));
+                    //Aqui fue el error
+                    acum = acum + (Acum.get(i).get(k) * Acum.get(j).get(k));
                 }
                 acum = acum / 60;
 
@@ -47,8 +59,9 @@ public class App {
             }
         }
 
-        System.out.println(MatrizCovarianza[0][0]);
-
+       
+        System.out.println(MatrizCovarianza[3][3]);
+        
         AG ag = new AG(cryptos, MatrizCovarianza);
 
         // TODO a partir de aqui iria el ciclo de generaciones
