@@ -1,26 +1,40 @@
-import java.util.Map;
+import java.util.ArrayList;
 
 public class Coin {
     private String symbol;
-    private Map<String, Double> historical;
+    private Double[] historical;
+    private Double[] rpi;
 
-    private int genNumber;
+    private int index;
 
-    public Coin(String symbol, Map<String, Double> historical, int genNumber) {
+    public Coin(String symbol, Double [] historical, Double [] rpi, int index) {
         this.symbol = symbol;
         this.historical = historical;
-        this.genNumber = genNumber;
+        this.rpi = rpi;
+        this.index = index;
     }
 
     public String getSymbol() {
         return symbol;
     }
 
-    public Map<String, Double> getHistorical() {
+    public Double[] getHistorical() {
         return historical;
     }
 
-    public int getGenNumber() {
-        return genNumber;
+    public int getIndex() {
+        return index;
+    }
+
+    public Double[] getRpi() {
+        return rpi;
+    }
+
+    public Double getRpi(int index) {
+        return rpi[index];
+    }
+
+    public Double getHistorical(int index) {
+        return historical[index];
     }
 }

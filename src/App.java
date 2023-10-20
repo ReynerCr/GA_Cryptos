@@ -14,22 +14,38 @@ public class App {
         // TODO quedaria mas bonito si se leen los argumentos desde la linea de comandos para la cantidad de meses a leer por archivo
 
         ArrayList<Coin> cryptos = null;
-
+        // 60 meses = 5 anios
+        int cantMeses = 60;
+        
         try {
-            // 60 meses = 5 anios
-            cryptos = new ParseCSV("./prices", 60).getCryptos();
+            ParseCSV csv = new ParseCSV("./prices", cantMeses);
+            cryptos = csv.getCryptos();
         } catch (Exception e) {
             System.out.println("Error al leer los archivos");
+            e.printStackTrace();
             return;
         }
-        
 
         System.out.println("--------------------------------");
         System.out.println("Se leyeron " + cryptos.size() + " archivos .csv");
         for (Coin crypto : cryptos) {
             System.out.println(crypto.getSymbol());
-            for (Map.Entry<String, Double> entry : crypto.getHistorical().entrySet()) {
-                System.out.println(entry.getKey() + " " + entry.getValue());
+            System.out.println("Precio historico");
+            Double [] historical = crypto.getHistorical();
+            for (Double precio : historical) {
+                System.out.println(precio);
+            }
+        }
+
+
+        System.out.println("--------------------------------");
+        System.out.println("Se leyeron " + cryptos.size() + " archivos .csv");
+        for (Coin crypto : cryptos) {
+            System.out.println(crypto.getSymbol());
+            System.out.println("Rpi");
+            Double [] rpi = crypto.getRpi();
+            for (Double rpii : rpi) {
+                System.out.println(rpii);
             }
         }
     }

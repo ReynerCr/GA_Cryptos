@@ -8,9 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ParseCSV {
 	// leer datos de archivos .csv en el directorio /prices
@@ -54,17 +52,32 @@ public class ParseCSV {
 
 				String[] nextLine;
 
-				Map<String, Double> historical = new HashMap<String, Double>();
+				Double [] historical = new Double[cantMeses];
+				Double [] rpi = new Double[cantMeses];
+				Double precio;
+
 				while (j < cantMeses && (nextLine = csvReader.readNext()) != null) {
-					// leer cada linea y tomar los valores de "closeTime" y "close"
-					// indices 1 y 7 respectivamente
-					String[] fecha = nextLine[1].split("-");
-					String fechaMesAnio = fecha[0] + "-" + fecha[1];
-					historical.put(fechaMesAnio, Double.parseDouble(nextLine[7]));
+					// leer cada linea y tomar los valores de "close"
+					// 7 respectivamente
+					// Esta ordenado por fecha
+					precio = Double.parseDouble(nextLine[7]);
+					historical[j] = precio;
+					if (j > 0) { // para j = 0 no hay un precio mas nuevo
+						rpi[j-1] = (historical[j-1]/precio) - 1;
+					}
+
 					++j;
 				}
 
-				Coin crypto = new Coin(nombreExtension[0], historical, i+1);
+				// calculando el ultimo rpi
+				if ((nextLine = csvReader.readNext()) != null) {
+					precio = Double.parseDouble(nextLine[7]);
+					rpi[j-1] = (historical[j-1]/precio) - 1;
+				} else {
+					System.out.println("Advertencia: no se pudo calcular Rpi para ultimo valor porque no hay mas datos.");
+				}
+
+				Coin crypto = new Coin(nombreExtension[0], historical, rpi, i+1);
 				cryptos.add(crypto);
 
 				fileReader.close();
