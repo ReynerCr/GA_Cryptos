@@ -8,13 +8,15 @@ public class AG{
     private List<List<Double>> Pesos;
     private List<Double>  Covarianza;
     private Double [] [] Matriz;
+    private List<Double> fitness;
+
     private List<Double> Promedios;
 
     public void CrearCovarianzas(){
         Covarianza = new ArrayList<>();
 
-        for(int k=0;j<100;k++){
-            double cova=0.0;
+        for(int k=0;k<100;k++){
+            Double cova=0.0;
             for(int i=0;i<10;i++){
                 
                 for(int j=0;j<10;j++){
@@ -26,24 +28,28 @@ public class AG{
 
     }
 
-    
-    public static void CrearRendimientos(List<List<Double>> Pesos, List<Coin> Coins){
+    public void Crearfitness(){
 
-        List<Double> list = new ArrayList<>();
+        fitness = new ArrayList<>();
 
-        for(int i=1;i<=Pesos.size();i++){
-        //    double rendimientos = 0;
-            List<Double> aux = Pesos.get(i);
-            for(int j=1;j<=Pesos.get(i).size();i++){
-               //Peso por valor
-              //rendimientos = rendimientos + (aux.get(j)*Coins.get(j));
-
-            }
-
-        //list.add(rendimientos);
+        for(int i=0;i<100;i++){
+             fitness.add(Rendimientos.get(i)/Covarianza.get(i));
         }
 
-     
+    }
+    
+    public void CrearRendimientos(List<Coin> Coins){
+
+        Rendimientos=new ArrayList<>();
+
+        for(int i=0;i<100;i++){
+            Double acumulador=0.0d;
+
+            for(int j=0;j<10;j++){
+               acumulador=acumulador+Pesos.get(i).get(j);
+            }
+            Rendimientos.add(acumulador);
+        }
 
     }
 
