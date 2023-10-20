@@ -59,13 +59,23 @@ public class AG {
         int M = 100;
         for (int i = 0; i < M; i++) {
             ArrayList<Double> list = new ArrayList<>(); // cada gen de cada cromosoma
+            double acum = 0.0;
             for (int j = 0; j < 10; j++) {
+                
+                double numero =random.nextDouble() * 100;
+                acum=acum+numero;
+                list.add(numero);
 
-                list.add(random.nextDouble() * 100);
             }
-            list.replaceAll(numero -> numero = numero / list.stream().mapToInt(Double::intValue).sum());
+            
+            for(int j=0;j<10;j++){
+                double numero=list.get(j);
+                numero = numero / acum;
+                list.set(j,numero);
+            }
 
             Pesos.add(list);
+            System.out.println(list);
         }
     } // fin CrearNumeros
 
