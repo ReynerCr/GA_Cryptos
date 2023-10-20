@@ -4,11 +4,12 @@ public class Coin {
     private String symbol;
     private Map<String, Double> historical;
 
-    public int gen;
+    private int genNumber;
 
-    public Coin(String symbol,  Map<String, Double> historical) {
+    public Coin(String symbol, Map<String, Double> historical, int genNumber) {
         this.symbol = symbol;
         this.historical = historical;
+        this.genNumber = genNumber;
     }
 
     public String getSymbol() {
@@ -17,5 +18,9 @@ public class Coin {
 
     public Map<String, Double> getHistorical() {
         return historical;
+    }
+
+    public int getGenNumber() {
+        return genNumber;
     }
 }
