@@ -4,8 +4,9 @@ public class Coin {
     private String symbol;
     private Double[] historical;
     private Double[] rpi;
-    private Double mediaRpi;
 
+    private Double[] vector_rpi_m;
+    private Double mediaRpi;
     private int index;
 
     public Coin(String symbol, Double [] historical, Double [] rpi, int index) {
@@ -13,13 +14,24 @@ public class Coin {
         this.historical = historical;
         this.rpi = rpi;
         this.index = index;
+        this.vector_rpi_m = new Double[60];
 
-        mediaRpi = 0.0d;
+        this.mediaRpi = 0.0d;
         for (int i = 0; i < rpi.length; i++) {
-            mediaRpi += rpi[i];
+            this.mediaRpi += rpi[i];
         }
 
-        mediaRpi = mediaRpi / rpi.length;
+        this.mediaRpi = this.mediaRpi / rpi.length;
+    }
+    public void calculate_vector_rpi_m(){
+        
+        for(int i=0;i<60;i++){
+            vector_rpi_m[i]=rpi[i]-this.mediaRpi;  
+        }
+    }
+
+    public Double[] getvector_rpi_m(){
+        return vector_rpi_m; 
     }
 
     public String getSymbol() {
@@ -45,7 +57,6 @@ public class Coin {
     public Double getHistorical(int index) {
         return historical[index];
     }
-
     public Double getMediaRpi() {
         return mediaRpi;
     }
