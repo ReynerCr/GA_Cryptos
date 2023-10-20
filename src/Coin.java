@@ -20,9 +20,11 @@ public class Coin {
         }
 
         this.mediaRpi = this.mediaRpi / rpi.length;
+
+        calculate_vector_rpi_m();
     }
 
-    public void calculate_vector_rpi_m() {
+    private void calculate_vector_rpi_m() {
         for (int i = 0; i < 60; i++) {
             vector_rpi_m[i] = rpi[i] - this.mediaRpi;
         }

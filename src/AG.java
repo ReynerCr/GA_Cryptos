@@ -1,18 +1,22 @@
 import java.util.ArrayList;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class AG {
 
+    private ArrayList<Coin> Coins;
     private ArrayList<Double> Rendimientos;
     private ArrayList<ArrayList<Double>> Pesos;
     private ArrayList<Double> Covarianza;
     private Double[][] MatrizCovarianza;
     private ArrayList<Double> fitness;
 
+    public AG(ArrayList<Coin> Coins, Double[][] MatrizCovarianza) {
+        this.Coins = Coins;
+        this.MatrizCovarianza = MatrizCovarianza;
+    }
+
     public void CrearCovarianzas() {
         Covarianza = new ArrayList<>();
-
         for (int k = 0; k < 100; k++) {
             Double cova = 0.0;
             for (int i = 0; i < 10; i++) {
@@ -23,7 +27,6 @@ public class AG {
             }
             Covarianza.add(cova);
         }
-
     } // fin CrearCovarianzas
 
     public void Crearfitness() {
@@ -34,7 +37,7 @@ public class AG {
         }
     } // fin Crearfitness
 
-    public void CrearRendimientos(ArrayList<Coin> Coins) {
+    public void CrearRendimientos() {
         Rendimientos = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
@@ -64,7 +67,9 @@ public class AG {
 
             Pesos.add(list);
         }
+    } // fin CrearNumeros
 
-        return;
-    } //  fin CrearNumeros
+    public void setMatrizCovarianzas(Double[][] MatrizCovarianza) {
+        this.MatrizCovarianza = MatrizCovarianza;
+    }
 }
