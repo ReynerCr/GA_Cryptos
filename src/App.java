@@ -1,15 +1,5 @@
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderBuilder;
-import com.opencsv.CSVParserBuilder;
-import com.opencsv.CSVParser;
-
-import java.io.File;
-import java.io.FileReader;
-import java.util.Map;
-import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class App {

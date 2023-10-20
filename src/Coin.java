@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Coin {
     private String symbol;
     private Double[] historical;
@@ -9,7 +7,7 @@ public class Coin {
     private Double mediaRpi;
     private int index;
 
-    public Coin(String symbol, Double [] historical, Double [] rpi, int index) {
+    public Coin(String symbol, Double[] historical, Double[] rpi, int index) {
         this.symbol = symbol;
         this.historical = historical;
         this.rpi = rpi;
@@ -23,15 +21,15 @@ public class Coin {
 
         this.mediaRpi = this.mediaRpi / rpi.length;
     }
-    public void calculate_vector_rpi_m(){
-        
-        for(int i=0;i<60;i++){
-            vector_rpi_m[i]=rpi[i]-this.mediaRpi;  
+
+    public void calculate_vector_rpi_m() {
+        for (int i = 0; i < 60; i++) {
+            vector_rpi_m[i] = rpi[i] - this.mediaRpi;
         }
     }
 
-    public Double[] getvector_rpi_m(){
-        return vector_rpi_m; 
+    public Double[] getvector_rpi_m() {
+        return vector_rpi_m;
     }
 
     public String getSymbol() {
@@ -57,6 +55,7 @@ public class Coin {
     public Double getHistorical(int index) {
         return historical[index];
     }
+
     public Double getMediaRpi() {
         return mediaRpi;
     }
