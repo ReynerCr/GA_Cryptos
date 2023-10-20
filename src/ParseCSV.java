@@ -77,7 +77,7 @@ public class ParseCSV {
 					System.out.println("Advertencia: no se pudo calcular Rpi para ultimo valor porque no hay mas datos.");
 				}
 
-				Coin crypto = new Coin(nombreExtension[0], historical, rpi, i+1);
+				Coin crypto = new Coin(nombreExtension[0], historical, rpi, i);
 				cryptos.add(crypto);
 
 				fileReader.close();
