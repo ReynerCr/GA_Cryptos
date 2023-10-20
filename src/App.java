@@ -26,9 +26,13 @@ public class App {
             return;
         }
 
+        // TODO borrar estas impresiones que son de muestra
         System.out.println("--------------------------------");
         System.out.println("Se leyeron " + cryptos.size() + " archivos .csv");
         for (Coin crypto : cryptos) {
+            if (!crypto.getSymbol().equals("BTC")) {
+                continue;
+            }
             System.out.println(crypto.getSymbol());
             System.out.println("Precio historico");
             Double [] historical = crypto.getHistorical();
@@ -36,7 +40,6 @@ public class App {
                 System.out.println(precio);
             }
         }
-
 
         System.out.println("--------------------------------");
         System.out.println("Se leyeron " + cryptos.size() + " archivos .csv");
