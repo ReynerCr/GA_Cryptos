@@ -51,6 +51,7 @@ public class App {
         
 
         List<List<Double>> Acum = new ArrayList<>();
+        List<Double> RentabilidadTitulos= new ArrayList<>();
 
         System.out.println("Hola");
         for(Coin crypto: cryptos){
@@ -61,7 +62,9 @@ public class App {
 
             List<Double> conjunto = new ArrayList<>();
             conjunto=Arrays.asList(vector2);
-            Acum.add(conjunto);              
+            Acum.add(conjunto);   
+            
+            RentabilidadTitulos.add(crypto.getMediaRpi());
         }
 
        System.out.println(Acum.get(0));

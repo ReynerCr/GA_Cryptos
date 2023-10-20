@@ -7,10 +7,8 @@ public class AG {
     private ArrayList<Double> Rendimientos;
     private ArrayList<ArrayList<Double>> Pesos;
     private ArrayList<Double> Covarianza;
-    private Double[][] Matriz;
+    private Double[][] MatrizCovarianza;
     private ArrayList<Double> fitness;
-
-    private ArrayList<Double> Promedios;
 
     public void CrearCovarianzas() {
         Covarianza = new ArrayList<>();
@@ -20,7 +18,7 @@ public class AG {
             for (int i = 0; i < 10; i++) {
 
                 for (int j = 0; j < 10; j++) {
-                    cova = cova + (Pesos.get(k).get(i) * Pesos.get(k).get(j) * Matriz[i][j]);
+                    cova = cova + (Pesos.get(k).get(i) * Pesos.get(k).get(j) * MatrizCovarianza[i][j]);
                 }
             }
             Covarianza.add(cova);
@@ -43,7 +41,7 @@ public class AG {
             Double acumulador = 0.0d;
 
             for (int j = 0; j < 10; j++) {
-                acumulador = acumulador + Pesos.get(i).get(j);
+                acumulador = acumulador + Pesos.get(i).get(j) * Coins.get(j).getMediaRpi();
             }
             Rendimientos.add(acumulador);
         }
