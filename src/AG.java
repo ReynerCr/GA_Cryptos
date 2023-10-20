@@ -1,16 +1,16 @@
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class AG {
 
-    private List<Double> Rendimientos;
-    private List<List<Double>> Pesos;
-    private List<Double> Covarianza;
+    private ArrayList<Double> Rendimientos;
+    private ArrayList<ArrayList<Double>> Pesos;
+    private ArrayList<Double> Covarianza;
     private Double[][] Matriz;
-    private List<Double> fitness;
+    private ArrayList<Double> fitness;
 
-    private List<Double> Promedios;
+    private ArrayList<Double> Promedios;
 
     public void CrearCovarianzas() {
         Covarianza = new ArrayList<>();
@@ -26,20 +26,17 @@ public class AG {
             Covarianza.add(cova);
         }
 
-    }
+    } // fin CrearCovarianzas
 
     public void Crearfitness() {
-
         fitness = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
             fitness.add(Rendimientos.get(i) / Covarianza.get(i));
         }
+    } // fin Crearfitness
 
-    }
-
-    public void CrearRendimientos(List<Coin> Coins) {
-
+    public void CrearRendimientos(ArrayList<Coin> Coins) {
         Rendimientos = new ArrayList<>();
 
         for (int i = 0; i < 100; i++) {
@@ -50,28 +47,26 @@ public class AG {
             }
             Rendimientos.add(acumulador);
         }
+    } // fin CrearRendimientos
 
-    }
-
-    public static List<List<Double>> CrearNumeros() {
-
+    public void CrearNumeros() {
         Random random = new Random();
-        List<List<Double>> lists = new ArrayList<>();
+        Pesos = new ArrayList<ArrayList<Double>>();
 
         // Creamos pesos aleatorios todavía no conozco la población que va a ser M
 
         int M = 100;
         for (int i = 0; i < M; i++) {
-            List<Double> list = new ArrayList<>();
+            ArrayList<Double> list = new ArrayList<>(); // cada gen de cada cromosoma
             for (int j = 0; j < 10; j++) {
 
                 list.add(random.nextDouble() * 100);
             }
             list.replaceAll(numero -> numero = numero / list.stream().mapToInt(Double::intValue).sum());
 
-            lists.add(list);
+            Pesos.add(list);
         }
 
-        return lists;
-    }
+        return;
+    } //  fin CrearNumeros
 }
