@@ -10,11 +10,32 @@ public class AG {
     private Double[][] MatrizCovarianza;
     private ArrayList<Double> fitness;
 
+    private ArrayList<ArrayList<Double>> Ganadores;
+    private ArrayList<ArrayList<Double>> NuevaGeneracion;
+
     // Constructor
     public AG(ArrayList<Coin> Coins, Double[][] MatrizCovarianza) {
         this.Coins = Coins;
         this.MatrizCovarianza = MatrizCovarianza;
     }
+
+    public ArrayList<Double> getFitness() {
+        return fitness;
+    }
+
+    public Integer getNuevaPoblación() {
+        if (NuevaGeneracion == null) {
+            NuevaGeneracion = new ArrayList<ArrayList<Double>>();
+        }
+        return NuevaGeneracion.size();
+    }
+
+    // Funcion para reemplazar la poblacion
+    public void ReemplazarPoblacion() {
+        Pesos = NuevaGeneracion;
+        NuevaGeneracion = new ArrayList<ArrayList<Double>>();
+    } // fin ReemplazarPoblacion
+
 
     // Funcion para calcular la covarianza
     public void CrearCovarianzas() {
@@ -32,32 +53,33 @@ public class AG {
     } // fin CrearCovarianzas
 
     // Funcion para realizar el torneo
-    public void Torneo(){
-       
-        Random random = new Random();   
-
+    public void Torneo() {
+        Random random = new Random();
+        Ganadores = new ArrayList<ArrayList<Double>>();
         ArrayList<Double> Participantes = new ArrayList<>();
         ArrayList<Integer> Indices = new ArrayList<>();
 
-       
-        for(int i=0;i<2;i++){
-            for(int j=0;j<20;j++){
-            int numero =random.nextInt(100);
-            Indices.add(numero);
-            Participantes.add(fitness.get(Indices.get(j)));
-           System.out.println(Participantes.get(j));
-        }
- 
-        Double ganador=Collections.max(Participantes);
-        Participantes.indexOf(ganador);
-        System.out.println("este es el ganador");
-        System.out.println(ganador);
+        for (int i = 0; i < 2; i++) {
+            for (int j = 0; j < 20; j++) {
+                int numero = random.nextInt(100);
+                Indices.add(numero);
+                Participantes.add(fitness.get(Indices.get(j)));
+            }
 
-        }
-       
+            Double ganador = Collections.max(Participantes);
+            Integer index = Participantes.indexOf(ganador);
 
+            Ganadores.add(Pesos.get(index));
+        } // fin for j
+    } // fin Torneo i
+
+    public ArrayList<ArrayList<Double>> GetGanadores() {
+        return Ganadores;
     }
 
+    public ArrayList<ArrayList<Double>> GetNuevaGeneracion() {
+        return NuevaGeneracion;
+    }
     // Funcion para calcular el fitness
     public void Crearfitness() {
         fitness = new ArrayList<>();
@@ -145,5 +167,5 @@ public class AG {
 
     public void setMatrizCovarianzas(Double[][] MatrizCovarianza) {
         this.MatrizCovarianza = MatrizCovarianza;
-    }  // fin setMatrizCovarianzas
+    } // fin setMatrizCovarianzas
 } // fin clase AG

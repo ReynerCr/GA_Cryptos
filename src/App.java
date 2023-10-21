@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Collections;
 
 public class App {
     public static void main(String[] args) throws Exception {
@@ -25,16 +26,6 @@ public class App {
         List<List<Double>> Acum = new ArrayList<>();
 
         for (Coin crypto : cryptos) {
-         /*    System.out.println(crypto.getSymbol());
-
-            System.out.println(Arrays.toString(crypto.getRpi()));
-
-            Scanner sc = new Scanner (System.in); // Crea un objeto Scanner
-System.out.println ("Presiona Enter para continuar..."); // Muestra un mensaje
-sc.nextLine (); // Espera a que el usuario presione Enter
-*/
-
-     //       System.out.println(crypto.getMediaRpi());
             Double[] vector2 = crypto.getvector_rpi_m();
 
             List<Double> conjunto = new ArrayList<>();
@@ -42,17 +33,13 @@ sc.nextLine (); // Espera a que el usuario presione Enter
             Acum.add(conjunto);
         }
 
-     //   System.out.println(Acum.get(3)); 
-
-
-
         Double[][] MatrizCovarianza = new Double[10][10];
 
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 Double acum = 0.0d;
                 for (int k = 0; k < 60; k++) {
-                    //Aqui fue el error
+                    // Aqui fue el error
                     acum = acum + (Acum.get(i).get(k) * Acum.get(j).get(k));
                 }
                 acum = acum / 60;
@@ -61,43 +48,56 @@ sc.nextLine (); // Espera a que el usuario presione Enter
             }
         }
 
-      
-       
-     //   System.out.println(MatrizCovarianza[3][3]);
-      
         AG ag = new AG(cryptos, MatrizCovarianza);
 
-        
         ag.CrearNumeros();
         ag.CrearRendimientos();
         ag.CrearCovarianzas();
         ag.Crearfitness();
 
-        for(int i=0;i<30;i++){
-            
-            while(ag.getNuevaPoblación()!=100){
-                ag.Torneo();
+        for (int i = 0; i < 30; i++) { // 30 iteraciones
+            while (ag.getNuevaPoblación() != 100) { // 100 individuos
+                ag.Torneo(); // torneo
+                // Calculo random para cruza y muta
                 Double prueba_cruce = Math.random();
                 Double prueba_muta = Math.random();
+                // Ganadores de torneo
                 ArrayList<ArrayList<Double>> Ganadores = new ArrayList<ArrayList<Double>>();
-                if(prueba_cruce <= 0.80){
-                Ganadores=ag.SetGanadores();
-                Ganadores= ag.crucePorPesos(Ganadores.get(0), Ganadores.get(1));
+                if (prueba_cruce <= 0.80) { // cruza
+                    Ganadores = ag.GetGanadores();
+                    Ganadores = ag.crucePorPesos(Ganadores.get(0), Ganadores.get(1));
                 }
-                if(prueba_muta <=0.05){
-                    for(int k=0;k<Ganadores.size();i++){
-                        ag.mutacion(Ganadores.get(i));
+                if (prueba_muta <= 0.05) { // muta
+                    for (int k = 0; k < Ganadores.size(); k++) {
+                        ag.mutacion(Ganadores.get(k));
                     }
                 }
-                
-Scanner sc = new Scanner (System.in); // Crea un objeto Scanner
-System.out.println ("Presiona Enter para continuar..."); // Muestra un mensaje
-sc.nextLine (); // Espera a que el usuario presione Enter
 
-            }
-            
-        }
-        
+                // Aniado los ganadores a la nueva poblacion
+                for (int k = 0; k < Ganadores.size(); k++) {
+                    ag.GetNuevaGeneracion().add(Ganadores.get(k));
+                }
+            } // while para la poblacion
 
-    }
-}
+            // Reemplazo la poblacion
+            ag.ReemplazarPoblacion();
+            // Calculo de fitness de la nueva poblacion
+            ag.CrearRendimientos();
+            ag.CrearCovarianzas();
+            ag.Crearfitness();
+        } // fin for de las iteraciones generaciones
+
+        // Calculo de la mejor solucion
+        ArrayList<Double> fitness = ag.getFitness();
+        Double mejor = Collections.max(fitness);
+
+        // Obtengo el indice de la mejor solucion
+        Integer index = fitness.indexOf(mejor);
+
+        // Imprimo la mejor solucion
+
+        System.out.println("La mejor solucion es: " + ag.getPesos().get(index));
+        System.out.println("Con un fitness de: " + mejor);
+
+    } // fin main
+} // fin clase
