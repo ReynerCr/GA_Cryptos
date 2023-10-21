@@ -97,6 +97,14 @@ public class App {
         System.out.println("Mejor solucion: " + pesos);
         System.out.println("Mejor fitness: " + ag.getFitness().get(index));
         
-        // 
+        int [] coins_index = new int[cryptos.size()];
+        for (int i = 0; i < cryptos.size(); i++) {
+            coins_index[i] = cryptos.get(i).getIndex();
+        }
+
+        System.out.println("Mejor combinacion de cryptos: ");
+        for (int i = 0; i < pesos.size(); i++) {
+            System.out.println(cryptos.get(coins_index[i]).getSymbol() + " " + pesos.get(i));
+        }
     } // fin main
 } // fin clase
