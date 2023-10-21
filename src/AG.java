@@ -83,29 +83,58 @@ public class AG {
         Random random = new Random();
         Pesos = new ArrayList<ArrayList<Double>>();
 
-        // Creamos pesos aleatorios todavía no conozco la población que va a ser M
-
         int M = 100;
         for (int i = 0; i < M; i++) {
             ArrayList<Double> list = new ArrayList<>(); // cada gen de cada cromosoma
-            double acum = 0.0;
+            Double acum = 0.0d;
             for (int j = 0; j < 10; j++) {
-                
-                double numero =random.nextDouble() * 100;
-                acum=acum+numero;
+                Double numero = random.nextDouble() * 100;
+                acum = acum + numero;
                 list.add(numero);
-
             }
-            
-            for(int j=0;j<10;j++){
-                double numero=list.get(j);
+
+            for (int j = 0; j < 10; j++) {
+                Double numero = list.get(j);
                 numero = numero / acum;
-                list.set(j,numero);
+                list.set(j, numero);
             }
 
             Pesos.add(list);
         }
     } // fin CrearNumeros
+
+
+    // Funcion para probar el cruce de cromosomas con pesos
+    public void Cruce() {
+        // Definir dos padres no aleatorios para probar el cruce
+        // la suma de todos los elementos debe ser menor a 1
+
+        ArrayList<Double> padre1 = Pesos.get(0);
+        ArrayList<Double> padre2 = Pesos.get(1);
+
+        // imprimir vector de padres
+
+        Double[][] hijos = cruces.weightedCrossover(padre1.toArray(new Double[0]), padre2.toArray(new Double[0]));
+
+        System.out.println("Padre 1: " + padre1);
+        System.out.println("Padre 2: " + padre2);
+
+        System.out.println("Suma de hijos");
+        Double suma1 = 0.0d;
+        Double suma2 = 0.0d;
+        Double sumap1 = 0.0d;
+        Double sumap2 = 0.0d;
+        for (int i = 0; i < 10; i++) {
+            suma1 = suma1 + hijos[0][i];
+            suma2 = suma2 + hijos[1][i];
+            sumap1 = sumap1 + padre1.get(i);
+            sumap2 = sumap2 + padre1.get(i);
+        }
+        System.out.println("hijo1 suma: " + suma1);
+        System.out.println("hijo2 suma: " + suma2);
+        System.out.println("padre1 suma: " + sumap1);
+        System.out.println("padre2 suma: " + sumap2);
+    }
 
     public void setMatrizCovarianzas(Double[][] MatrizCovarianza) {
         this.MatrizCovarianza = MatrizCovarianza;
