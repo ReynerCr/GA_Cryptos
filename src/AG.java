@@ -132,6 +132,17 @@ public class AG {
         return hijos;
     } // fin crucePorPesos
 
+    // Funcion para la mutacion de cromosomas
+    public void mutacion(ArrayList<Double> cromosoma) {
+        // Intercambia de posicion los cromosomas
+        Random rand = new Random();
+        int pos1 = rand.nextInt(10);
+        int pos2 = rand.nextInt(10);
+        Double aux = cromosoma.get(pos1);
+        cromosoma.set(pos1, cromosoma.get(pos2));
+        cromosoma.set(pos2, aux);
+    } // fin mutacion
+
     public void setMatrizCovarianzas(Double[][] MatrizCovarianza) {
         this.MatrizCovarianza = MatrizCovarianza;
     }  // fin setMatrizCovarianzas
