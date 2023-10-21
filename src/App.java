@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class App {
@@ -41,7 +42,8 @@ sc.nextLine (); // Espera a que el usuario presione Enter
             Acum.add(conjunto);
         }
 
-     //   System.out.println(Acum.get(3)); // TODO borrar
+     //   System.out.println(Acum.get(3)); 
+
 
 
         Double[][] MatrizCovarianza = new Double[10][10];
@@ -59,16 +61,43 @@ sc.nextLine (); // Espera a que el usuario presione Enter
             }
         }
 
+      
        
      //   System.out.println(MatrizCovarianza[3][3]);
-        
+      
         AG ag = new AG(cryptos, MatrizCovarianza);
 
-        // TODO a partir de aqui iria el ciclo de generaciones
+        
         ag.CrearNumeros();
         ag.CrearRendimientos();
         ag.CrearCovarianzas();
         ag.Crearfitness();
-        ag.Torneo();
+
+        for(int i=0;i<30;i++){
+            
+            while(ag.getNuevaPoblación()!=100){
+                ag.Torneo();
+                Double prueba_cruce = Math.random();
+                Double prueba_muta = Math.random();
+                ArrayList<ArrayList<Double>> Ganadores = new ArrayList<ArrayList<Double>>();
+                if(prueba_cruce <= 0.80){
+                Ganadores=ag.SetGanadores();
+                Ganadores= ag.crucePorPesos(Ganadores.get(0), Ganadores.get(1));
+                }
+                if(prueba_muta <=0.05){
+                    for(int k=0;k<Ganadores.size();i++){
+                        ag.mutacion(Ganadores.get(i));
+                    }
+                }
+                
+Scanner sc = new Scanner (System.in); // Crea un objeto Scanner
+System.out.println ("Presiona Enter para continuar..."); // Muestra un mensaje
+sc.nextLine (); // Espera a que el usuario presione Enter
+
+            }
+            
+        }
+        
+
     }
 }
