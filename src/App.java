@@ -87,17 +87,16 @@ public class App {
             ag.Crearfitness();
         } // fin for de las iteraciones generaciones
 
-        // Calculo de la mejor solucion
-        ArrayList<Double> fitness = ag.getFitness();
-        Double mejor = Collections.max(fitness);
+        // Calculo de la mejor solucion, fitness y peso
+        Double mejor = Collections.max(ag.getFitness());
+        Integer index = ag.getFitness().indexOf(mejor);
 
-        // Obtengo el indice de la mejor solucion
-        Integer index = fitness.indexOf(mejor);
-
-        // Imprimo la mejor solucion
-
-        System.out.println("La mejor solucion es: " + ag.getPesos().get(index));
-        System.out.println("Con un fitness de: " + mejor);
-
+        // Tengo que imprimir todo con los datos de Coin
+        ArrayList<Double> pesos = ag.getPesos().get(index);
+        
+        System.out.println("Mejor solucion: " + pesos);
+        System.out.println("Mejor fitness: " + ag.getFitness().get(index));
+        
+        // 
     } // fin main
 } // fin clase

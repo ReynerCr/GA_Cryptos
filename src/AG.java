@@ -30,6 +30,10 @@ public class AG {
         return NuevaGeneracion.size();
     }
 
+    public ArrayList<ArrayList<Double>> getPesos() {
+        return Pesos;
+    }
+
     // Funcion para reemplazar la poblacion
     public void ReemplazarPoblacion() {
         Pesos = NuevaGeneracion;
