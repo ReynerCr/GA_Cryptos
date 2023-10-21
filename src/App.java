@@ -33,7 +33,7 @@ System.out.println ("Presiona Enter para continuar..."); // Muestra un mensaje
 sc.nextLine (); // Espera a que el usuario presione Enter
 */
 
-            System.out.println(crypto.getMediaRpi());
+     //       System.out.println(crypto.getMediaRpi());
             Double[] vector2 = crypto.getvector_rpi_m();
 
             List<Double> conjunto = new ArrayList<>();
@@ -60,7 +60,7 @@ sc.nextLine (); // Espera a que el usuario presione Enter
         }
 
        
-        System.out.println(MatrizCovarianza[3][3]);
+     //   System.out.println(MatrizCovarianza[3][3]);
         
         AG ag = new AG(cryptos, MatrizCovarianza);
 
@@ -69,5 +69,6 @@ sc.nextLine (); // Espera a que el usuario presione Enter
         ag.CrearRendimientos();
         ag.CrearCovarianzas();
         ag.Crearfitness();
+        ag.Torneo();
     }
 }

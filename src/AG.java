@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public class AG {
@@ -13,6 +14,7 @@ public class AG {
     public AG(ArrayList<Coin> Coins, Double[][] MatrizCovarianza) {
         this.Coins = Coins;
         this.MatrizCovarianza = MatrizCovarianza;
+        
     }
 
     public void CrearCovarianzas() {
@@ -28,6 +30,33 @@ public class AG {
             Covarianza.add(cova);
         }
     } // fin CrearCovarianzas
+
+    public void Torneo(){
+       
+        Random random = new Random();   
+
+        ArrayList<Double> Participantes = new ArrayList<>();
+        ArrayList<Integer> Indices = new ArrayList<>();
+
+       
+        for(int i=0;i<2;i++){
+            for(int j=0;j<20;j++){
+            int numero =random.nextInt(100);
+            Indices.add(numero);
+            Participantes.add(fitness.get(Indices.get(j)));
+           System.out.println(Participantes.get(j));
+        }
+ 
+        Double ganador=Collections.max(Participantes);
+        Participantes.indexOf(ganador);
+        System.out.println("este es el ganador");
+        System.out.println(ganador);
+
+        }
+       
+
+    }
+
 
     public void Crearfitness() {
         fitness = new ArrayList<>();
@@ -75,7 +104,6 @@ public class AG {
             }
 
             Pesos.add(list);
-            System.out.println(list);
         }
     } // fin CrearNumeros
 
