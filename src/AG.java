@@ -3,7 +3,6 @@ import java.util.Collections;
 import java.util.Random;
 
 public class AG {
-
     private ArrayList<Coin> Coins;
     private ArrayList<Double> Rendimientos;
     private ArrayList<ArrayList<Double>> Pesos;
@@ -11,12 +10,13 @@ public class AG {
     private Double[][] MatrizCovarianza;
     private ArrayList<Double> fitness;
 
+    // Constructor
     public AG(ArrayList<Coin> Coins, Double[][] MatrizCovarianza) {
         this.Coins = Coins;
         this.MatrizCovarianza = MatrizCovarianza;
-        
     }
 
+    // Funcion para calcular la covarianza
     public void CrearCovarianzas() {
         Covarianza = new ArrayList<>();
         for (int k = 0; k < 100; k++) {
@@ -31,6 +31,7 @@ public class AG {
         }
     } // fin CrearCovarianzas
 
+    // Funcion para realizar el torneo
     public void Torneo(){
        
         Random random = new Random();   
@@ -57,7 +58,7 @@ public class AG {
 
     }
 
-
+    // Funcion para calcular el fitness
     public void Crearfitness() {
         fitness = new ArrayList<>();
 
@@ -66,6 +67,7 @@ public class AG {
         }
     } // fin Crearfitness
 
+    // Funcion para calcular los rendimientos (funcion max)
     public void CrearRendimientos() {
         Rendimientos = new ArrayList<>();
 
@@ -79,6 +81,7 @@ public class AG {
         }
     } // fin CrearRendimientos
 
+    // Funcion para crear los numeros aleatorios para pesos
     public void CrearNumeros() {
         Random random = new Random();
         Pesos = new ArrayList<ArrayList<Double>>();
@@ -103,40 +106,33 @@ public class AG {
         }
     } // fin CrearNumeros
 
+    // Funcion para el cruce de cromosomas con pesos
+    public ArrayList<ArrayList<Double>> crucePorPesos(ArrayList<Double> padre1, ArrayList<Double> padre2) {
+        ArrayList<ArrayList<Double>> hijos = new ArrayList<ArrayList<Double>>();
+        hijos.add(new ArrayList<Double>());
+        hijos.add(new ArrayList<Double>());
+        Random rand = new Random();
 
-    // Funcion para probar el cruce de cromosomas con pesos
-    public void Cruce() {
-        // Definir dos padres no aleatorios para probar el cruce
-        // la suma de todos los elementos debe ser menor a 1
-
-        ArrayList<Double> padre1 = Pesos.get(0);
-        ArrayList<Double> padre2 = Pesos.get(1);
-
-        // imprimir vector de padres
-
-        Double[][] hijos = cruces.weightedCrossover(padre1.toArray(new Double[0]), padre2.toArray(new Double[0]));
-
-        System.out.println("Padre 1: " + padre1);
-        System.out.println("Padre 2: " + padre2);
-
-        System.out.println("Suma de hijos");
-        Double suma1 = 0.0d;
-        Double suma2 = 0.0d;
-        Double sumap1 = 0.0d;
-        Double sumap2 = 0.0d;
-        for (int i = 0; i < 10; i++) {
-            suma1 = suma1 + hijos[0][i];
-            suma2 = suma2 + hijos[1][i];
-            sumap1 = sumap1 + padre1.get(i);
-            sumap2 = sumap2 + padre1.get(i);
+        Double acum1 = 0.0d;
+        Double acum2 = 0.0d;
+        for (int i = 0; i < padre1.size(); i++) {
+            Double aux = rand.nextDouble();
+            hijos.get(0).add(aux * padre1.get(i) + (1 - aux) * padre2.get(i));
+            hijos.get(1).add(aux * padre2.get(i) + (1 - aux) * padre1.get(i));
+            acum1 += hijos.get(0).get(i);
+            acum2 += hijos.get(1).get(i);
         }
-        System.out.println("hijo1 suma: " + suma1);
-        System.out.println("hijo2 suma: " + suma2);
-        System.out.println("padre1 suma: " + sumap1);
-        System.out.println("padre2 suma: " + sumap2);
-    }
+
+        // Re normalizar los pesos
+        for (int j = 0; j < 10; j++) {
+            hijos.get(0).set(j, hijos.get(0).get(j) / acum1);
+            hijos.get(1).set(j, hijos.get(1).get(j) / acum2);
+        }
+
+        return hijos;
+    } // fin crucePorPesos
 
     public void setMatrizCovarianzas(Double[][] MatrizCovarianza) {
         this.MatrizCovarianza = MatrizCovarianza;
-    }
-}
+    }  // fin setMatrizCovarianzas
+} // fin clase AG
