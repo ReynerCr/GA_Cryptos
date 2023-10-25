@@ -1,18 +1,17 @@
 public class Coin {
-    private String symbol;
-    private Double[] historical;
-    private Double[] rpi;
-
-    private Double[] vector_rpi_m;
-    private Double mediaRpi;
-    private int index;
+    private String symbol; // nombre de la moneda
+    private Double[] historical; // precios mensuales
+    private Double[] rpi; // rendimiento porcentual mensual
+    private Double[] vector_rpi_m; // vector rpi menos la media
+    private Double mediaRpi; // media de los rendimientos porcentuales mensuales
+    private int index; // indice de la moneda, segun el orden de archivos leidos
 
     public Coin(String symbol, Double[] historical, Double[] rpi, int index) {
         this.symbol = symbol;
         this.historical = historical;
         this.rpi = rpi;
         this.index = index;
-        this.vector_rpi_m = new Double[60];
+        this.vector_rpi_m = new Double[rpi.length];
 
         this.mediaRpi = 0.0d;
         for (int i = 0; i < rpi.length; i++) {
@@ -25,7 +24,7 @@ public class Coin {
     }
 
     private void calculate_vector_rpi_m() {
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < vector_rpi_m.length; i++) {
             vector_rpi_m[i] = rpi[i] - this.mediaRpi;
         }
     }

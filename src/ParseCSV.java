@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ParseCSV {
 	// leer datos de archivos .csv en el directorio /prices
-	private ArrayList<Coin> cryptos; 
+	private ArrayList<Coin> cryptos;
 
 	public ParseCSV(String ruta, int cantMeses) throws Exception {
 		this.cryptos = new ArrayList<Coin>();
@@ -32,7 +32,8 @@ public class ParseCSV {
 		return cryptos;
 	}
 
-	private void loadData(String ruta, int cantMeses) throws CsvValidationException, NumberFormatException, IOException {
+	private void loadData(String ruta, int cantMeses)
+			throws CsvValidationException, NumberFormatException, IOException {
 		File rutaPrecios = new File(ruta);
 		String archivosPrecios[] = rutaPrecios.list();
 
@@ -52,34 +53,29 @@ public class ParseCSV {
 
 				String[] nextLine;
 
-				Double [] historical = new Double[cantMeses];
-				Double [] rpi = new Double[cantMeses];
+				Double[] historical = new Double[cantMeses];
+				Double[] rpi = new Double[cantMeses];
 				Double precio;
-
 				while (j < cantMeses && (nextLine = csvReader.readNext()) != null) {
-					// leer cada linea y tomar los valores de "close"
-					// 7 respectivamente
-					// Esta ordenado por fecha
+					// Los valores de close estan en la columna 7
+					// Estan ordenados por fecha de mas reciente a mas antigua
 					precio = Double.parseDouble(nextLine[7]);
 					historical[j] = precio;
-					if (j > 0) { // para j = 0 no hay un precio mas nuevo
-						rpi[j-1] = (historical[j-1]/precio) - 1;
+					if (j > 0) { // para j = 0 no hay un precio de un periodo mas reciente
+						rpi[j - 1] = (historical[j - 1] / precio) - 1;
 					}
-
 					++j;
 				}
-
 				// calculando el ultimo rpi
 				if ((nextLine = csvReader.readNext()) != null) {
 					precio = Double.parseDouble(nextLine[7]);
-					rpi[j-1] = (historical[j-1]/precio) - 1;
+					rpi[j - 1] = (historical[j - 1] / precio) - 1;
 				} else {
 					System.out.println("Advertencia: no se pudo calcular Rpi para ultimo valor porque no hay mas datos.");
 				}
-
+				
 				Coin crypto = new Coin(nombreExtension[0], historical, rpi, i);
 				cryptos.add(crypto);
-
 				fileReader.close();
 				csvReader.close();
 				j = 0;
