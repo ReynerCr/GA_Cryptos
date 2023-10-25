@@ -35,14 +35,12 @@ public class AG {
                 acum = acum + numero;
                 list.add(numero);
             }
-
             // Normalizando los pesos
             for (int j = 0; j < 10; j++) {
                 Double numero = list.get(j);
                 numero = numero / acum;
                 list.set(j, numero);
             }
-
             Pesos.add(list);
         }
     } // fin CrearNumeros
@@ -53,7 +51,6 @@ public class AG {
         for (int k = 0; k < tamanioPoblacion; k++) {
             Double cova = 0.0;
             for (int i = 0; i < 10; i++) {
-
                 for (int j = 0; j < 10; j++) {
                     cova = cova + (Pesos.get(k).get(i) * Pesos.get(k).get(j) * MatrizCovarianza[i][j]);
                 }
@@ -65,10 +62,8 @@ public class AG {
     // Funcion para calcular los rendimientos (funcion max)
     public void CrearRendimientos() {
         Rendimientos = new ArrayList<>();
-
         for (int i = 0; i < tamanioPoblacion; i++) {
             Double acumulador = 0.0d;
-
             for (int j = 0; j < 10; j++) {
                 acumulador = acumulador + Pesos.get(i).get(j) * Coins.get(j).getMediaRpi();
             }
@@ -114,10 +109,10 @@ public class AG {
         hijos.add(new ArrayList<Double>());
         hijos.add(new ArrayList<Double>());
         Random rand = new Random();
-
         Double acum1 = 0.0d;
         Double acum2 = 0.0d;
         Double aux = rand.nextDouble();
+        
         for (int i = 0; i < padre1.size(); i++) {
             hijos.get(0).add(aux * padre1.get(i) + (1 - aux) * padre2.get(i));
             hijos.get(1).add(aux * padre2.get(i) + (1 - aux) * padre1.get(i));

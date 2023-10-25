@@ -45,9 +45,9 @@ public class App {
             }
         }
 
-        int tamanioPoblacion = 100;
-        int tamanioIteraciones = 30;
-        int iter = 0;
+        int tamanioPoblacion = 100; // tamanio de la poblacion
+        int tamanioIteraciones = 30; // cantidad de iteraciones
+        int iter = 0; // contador de iteraciones
 
         while (iter < tamanioIteraciones) { // iteraciones de AG distintas con soluciones distintas
             AG ag = new AG(cryptos, MatrizCovarianza, tamanioPoblacion);
